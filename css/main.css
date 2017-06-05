@@ -1,0 +1,12 @@
+nav{
+  height: 80px;
+}
+nav .nav-wrapper {
+  height: 57%;
+}
+#map {
+  top: 20px;
+  margin:0 auto;
+  height: 300px;
+  width: 80%;
+}
