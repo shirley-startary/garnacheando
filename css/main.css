@@ -5,8 +5,8 @@ nav .nav-wrapper {
   height: 57%;
 }
 #map {
-  top: 20px;
-  margin:0 auto;
+  margin:10px auto;
+  padding: 2px;
   height: 300px;
   width: 80%;
 }

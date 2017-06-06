@@ -1,4 +1,4 @@
-var plantillaRestaurates = '<article class="row restaurante">' +
+var plantillaRestaurates = '<article class="row restaurante" data-latitude="__latitude__" data-longitude="__longitude__">' +
         '<div class="card-panel hoverable grey lighten-5 z-depth-1">' +
           '<div class="row valign-wrapper">' +
             '<div class="col s3">' +
@@ -7,7 +7,7 @@ var plantillaRestaurates = '<article class="row restaurante">' +
             '<div class="col s9">' +
             	'<h5 class="name">__nombre__</h5>' +
               '<span class="black-text">' +
-                'Phone: __numero__' +
+                'Telefono: __numero__' +
               '</span>' +
             '</div>' +
           '</div>' +
@@ -18,13 +18,14 @@ var restaurantes = [
   {
 
     "nombre":"Tortas de Chilaquiles",
-    "foto":,
+    "foto":"img/tortasChilaquil.jpg",
     "ubicacion":{latitude:19.4084909,
       longitude:-99.1765471
     }
   },
   {
     "nombre":"Los tacos del chavo",
+    "foto":"img/tacosDelchavo.jpg",
     "ubicacion":{
       latitude:19.4372679,
       longitude:-99.1616254
@@ -32,6 +33,7 @@ var restaurantes = [
   },
   {
     "nombre":"Las Gorditas de Lucy",
+    "foto":"img/gorditaLucy.jpg",
     "ubicacion":{
       latitude:19.4455874,
       longitude:-99.1597356
@@ -39,32 +41,35 @@ var restaurantes = [
   },
   {
     "nombre":"Las Tortas de la 7",
+    "foto":"img/tortadela7.jpg",
     "ubicacion":{
       latitude:19.4705617,
       longitude:-99.1453105
+    }
+  },
+  {
+    "nombre":"Don kebab",
+    "foto":"img/donkebab.jpg",
+    "ubicacion":{
+      latitude:19.4194246,
+      longitude:-99.1750884
     }
   }
 ];
 
 var cargarPagina = function(){
+  $("#search-form").submit(filtrarRestaurantes);
   obtenerUbicacion()
-  cargarRestaurantes();
+  mostrarRestaurantes(restaurantes);
 }
 
 var filtrarRestaurantes = function (e) {
 	e.preventDefault();
 	var criterioBusqueda = $("#search").val().toLowerCase();
-	var restauranteFiltrados = restaurantes.filter(function (restaurante) {
-		return restaurantes.nombre.toLowerCase().indexOf(criterioBusqueda) >= 0;
+	var restaurantesFiltrados = restaurantes.filter(function (restaurante) {
+		return restaurante.nombre.toLowerCase().indexOf(criterioBusqueda) >= 0;
 	});
-	mostrarContactos(restaurantesFiltrados);
-};
-
-
-var cargarRestaurantes = function (restaurantes){
-  console.log(restaurantes);
-
-
+	mostrarRestaurantes(restaurantesFiltrados);
 };
 
 var mostrarRestaurantes = function (restaurantes) {
@@ -72,9 +77,24 @@ var mostrarRestaurantes = function (restaurantes) {
 	restaurantes.forEach(function (restaurante) {
 		plantillaFinal += plantillaRestaurates.replace("__nombre__", restaurante.nombre)
 			.replace("__numero__", restaurante.numero)
-			.replace("__foto__", restaurante.foto);
+			.replace("__foto__", restaurante.foto)
+      .replace("__latitude__",restaurante.ubicacion.latitude)
+      .replace("__longitude__",restaurante.ubicacion.longitude);
 	});
-	$(".restaurante").html(plantillaFinal);
+	$(".restaurantes").html(plantillaFinal);
+  $(".restaurante").click(function(){
+  var lat =$(this).data("latitude");
+  var lng =$(this).data("longitude");
+  console.log(lat);
+  console.log(lng);
+  var objeto={
+    lat:lat,
+    lng:lng
+  }
+  console.log(objeto);
+
+  mostrarMapa(objeto);
+});
 };
 
 
