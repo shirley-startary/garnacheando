@@ -61,6 +61,7 @@ var cargarPagina = function(){
   $("#search-form").submit(filtrarRestaurantes);
   obtenerUbicacion()
   mostrarRestaurantes(restaurantes);
+  $("#search").keyup(filtrarRestaurantes);
 }
 
 var filtrarRestaurantes = function (e) {
